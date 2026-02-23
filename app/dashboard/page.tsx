@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
