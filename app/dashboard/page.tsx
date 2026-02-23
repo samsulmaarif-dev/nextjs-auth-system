@@ -14,6 +14,11 @@ export default function DashboardPage() {
     }
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    router.push("/login");
+  };
+
   return (
     <div
       style={{
@@ -28,6 +33,13 @@ export default function DashboardPage() {
     >
       <h1>Dashboard</h1>
       <p>Welcome to your app 🚀</p>
+
+      <button
+        onClick={handleLogout}
+        style={{ padding: "10px 20px", marginTop: "20px" }}
+      >
+        Logout
+      </button>
     </div>
   );
 }
