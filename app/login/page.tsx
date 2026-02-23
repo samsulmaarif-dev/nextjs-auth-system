@@ -25,9 +25,8 @@ export default function LoginPage() {
 
     if (data.success) {
       localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("user", JSON.stringify(data.user));
       router.push("/dashboard");
-    } else {
-      setError(data.message);
     }
   };
 

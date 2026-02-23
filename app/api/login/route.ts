@@ -8,7 +8,11 @@ export async function POST(request: Request) {
   if (email === "admin@gmail.com" && password === "123456") {
     return NextResponse.json({
       success: true,
-      message: "Login berhasil",
+      user: {
+        name: "Admin",
+        email: "admin@gmail.com",
+        role: "Administrator",
+      },
     });
   }
 

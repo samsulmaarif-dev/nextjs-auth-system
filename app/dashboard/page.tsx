@@ -1,21 +1,26 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
   const router = useRouter();
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const storedUser = localStorage.getItem("user");
 
     if (!isLoggedIn) {
       router.push("/login");
+    } else if (storedUser) {
+      setUser(JSON.parse(storedUser));
     }
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("user");
     router.push("/login");
   };
 
@@ -41,9 +46,20 @@ export default function DashboardPage() {
         }}
       >
         <h1 style={{ marginBottom: "10px" }}>Dashboard</h1>
-        <p style={{ opacity: 0.8, marginBottom: "25px" }}>
-          Welcome to your authenticated app 🚀
-        </p>
+
+        {user && (
+          <>
+            <p style={{ marginBottom: "5px" }}>
+              Welcome, <strong>{user.name}</strong>
+            </p>
+            <p style={{ opacity: 0.8, marginBottom: "20px" }}>
+              Email: {user.email}
+            </p>
+            <p style={{ opacity: 0.6, marginBottom: "25px" }}>
+              Role: {user.role}
+            </p>
+          </>
+        )}
 
         <button
           onClick={handleLogout}
