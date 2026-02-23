@@ -24,6 +24,7 @@ export default function LoginPage() {
     const data = await response.json();
 
     if (data.success) {
+      localStorage.setItem("isLoggedIn", "true");
       router.push("/dashboard");
     } else {
       setError(data.message);
