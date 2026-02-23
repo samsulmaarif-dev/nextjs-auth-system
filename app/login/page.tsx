@@ -10,12 +10,23 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = () => {
-    // simulasi akun benar
-    if (email === "admin@gmail.com" && password === "123456") {
+  const handleLogin = async () => {
+    setError("");
+
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
       router.push("/dashboard");
     } else {
-      setError("Email atau password salah!");
+      setError(data.message);
     }
   };
 
