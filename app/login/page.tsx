@@ -38,37 +38,75 @@ export default function LoginPage() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#111",
-        color: "white",
-        flexDirection: "column",
+        background: "linear-gradient(135deg, #0f172a, #1e293b)",
       }}
     >
-      <h1>Login</h1>
-
-      <input
-        type="text"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        style={{ padding: "10px", margin: "10px", width: "250px" }}
-      />
-
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        style={{ padding: "10px", margin: "10px", width: "250px" }}
-      />
-
-      <button
-        onClick={handleLogin}
-        style={{ padding: "10px 20px", marginTop: "10px" }}
+      <div
+        style={{
+          backgroundColor: "#1e293b",
+          padding: "40px",
+          borderRadius: "12px",
+          width: "320px",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.4)",
+          display: "flex",
+          flexDirection: "column",
+        }}
       >
-        Login
-      </button>
+        <h1
+          style={{ color: "white", textAlign: "center", marginBottom: "20px" }}
+        >
+          Welcome Back
+        </h1>
 
-      {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+        <input
+          type="text"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          style={{
+            padding: "12px",
+            marginBottom: "15px",
+            borderRadius: "8px",
+            border: "none",
+          }}
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          style={{
+            padding: "12px",
+            marginBottom: "15px",
+            borderRadius: "8px",
+            border: "none",
+          }}
+        />
+
+        <button
+          onClick={handleLogin}
+          style={{
+            padding: "12px",
+            borderRadius: "8px",
+            border: "none",
+            backgroundColor: "#3b82f6",
+            color: "white",
+            fontWeight: "bold",
+            cursor: "pointer",
+          }}
+        >
+          Login
+        </button>
+
+        {error && (
+          <p
+            style={{ color: "#f87171", marginTop: "15px", textAlign: "center" }}
+          >
+            {error}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
