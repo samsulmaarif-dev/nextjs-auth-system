@@ -1,30 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🔐 Next.js Fullstack Authentication System
 
-## Getting Started
+A modern fullstack authentication system built with Next.js App Router.
 
-First, run the development server:
+---
 
-```bash
-pnpm dev
-```
+## 🚀 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- API route authentication
+- Protected dashboard route
+- Login & Logout system
+- User data handling
+- Local storage session management
+- Modern responsive UI
+- Full frontend ↔ backend flow
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Tech Stack
 
-## Learn More
+- Next.js (App Router)
+- React
+- TypeScript
+- API Routes
+- Local Storage (session handling)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📦 How It Works
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. User logs in via frontend form
+2. Backend validates credentials
+3. Server returns user data
+4. Frontend stores session in localStorage
+5. Protected dashboard checks authentication
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📸 Demo Preview
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Login with:
+
+Email: admin@gmail.com  
+Password: 123456
+
+---
+
+## 👨‍💻 Author
+
+Built as a fullstack portfolio project.
