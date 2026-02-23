@@ -1,4 +1,24 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 export default function LoginPage() {
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = () => {
+    // simulasi akun benar
+    if (email === "admin@gmail.com" && password === "123456") {
+      router.push("/dashboard");
+    } else {
+      setError("Email atau password salah!");
+    }
+  };
+
   return (
     <div
       style={{
@@ -12,17 +32,31 @@ export default function LoginPage() {
       }}
     >
       <h1>Login</h1>
+
       <input
         type="text"
         placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         style={{ padding: "10px", margin: "10px", width: "250px" }}
       />
+
       <input
         type="password"
         placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         style={{ padding: "10px", margin: "10px", width: "250px" }}
       />
-      <button style={{ padding: "10px 20px", marginTop: "10px" }}>Login</button>
+
+      <button
+        onClick={handleLogin}
+        style={{ padding: "10px 20px", marginTop: "10px" }}
+      >
+        Login
+      </button>
+
+      {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
     </div>
   );
 }
