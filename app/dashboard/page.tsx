@@ -3,7 +3,13 @@
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
-  const [tasks, setTasks] = useState<any[]>([]);
+  type Task = {
+    id: number;
+    title: string;
+    status: string;
+  };
+
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [title, setTitle] = useState("");
 
   async function fetchTasks() {
@@ -12,7 +18,7 @@ export default function Dashboard() {
     setTasks(data);
   }
 
-  async function addTask(e: any) {
+  async function addTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     await fetch("/api/tasks", {
       method: "POST",
