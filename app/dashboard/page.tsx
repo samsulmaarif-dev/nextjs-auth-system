@@ -1,81 +1,85 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function DashboardPage() {
-  const router = useRouter();
-  const [user, setUser] = useState<{name: string; email: string; role: string} | null>(null);
+export default function Dashboard() {
+  const [tasks, setTasks] = useState<any[]>([]);
+  const [title, setTitle] = useState("");
+
+  async function fetchTasks() {
+    const res = await fetch("/api/tasks");
+    const data = await res.json();
+    setTasks(data);
+  }
+
+  async function addTask(e: any) {
+    e.preventDefault();
+    await fetch("/api/tasks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title }),
+    });
+    setTitle("");
+    fetchTasks();
+  }
+
+  async function updateStatus(id: number, status: string) {
+    await fetch("/api/tasks", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, status }),
+    });
+    fetchTasks();
+  }
+
+  async function deleteTask(id: number) {
+    await fetch("/api/tasks", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+    fetchTasks();
+  }
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
-    const storedUser = localStorage.getItem("user");
-
-    if (!isLoggedIn) {
-      router.push("/login");
-    } else if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    fetchTasks();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("user");
-    router.push("/login");
-  };
+  const total = tasks.length;
+  const done = tasks.filter((t) => t.status === "done").length;
+  const inProgress = tasks.filter((t) => t.status === "in-progress").length;
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        background: "linear-gradient(135deg, #0f172a, #1e293b)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "#1e293b",
-          padding: "40px",
-          borderRadius: "12px",
-          width: "400px",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.4)",
-          textAlign: "center",
-          color: "white",
-        }}
-      >
-        <h1 style={{ marginBottom: "10px" }}>Dashboard</h1>
+    <div style={{ padding: 40 }}>
+      <h1>TaskFlow Dashboard</h1>
 
-        {user && (
-          <>
-            <p style={{ marginBottom: "5px" }}>
-              Welcome, <strong>{user.name}</strong>
-            </p>
-            <p style={{ opacity: 0.8, marginBottom: "20px" }}>
-              Email: {user.email}
-            </p>
-            <p style={{ opacity: 0.6, marginBottom: "25px" }}>
-              Role: {user.role}
-            </p>
-          </>
-        )}
-
-        <button
-          onClick={handleLogout}
-          style={{
-            padding: "12px 20px",
-            borderRadius: "8px",
-            border: "none",
-            backgroundColor: "#ef4444",
-            color: "white",
-            fontWeight: "bold",
-            cursor: "pointer",
-          }}
-        >
-          Logout
-        </button>
+      <div style={{ display: "flex", gap: 20 }}>
+        <div>Total: {total}</div>
+        <div>In Progress: {inProgress}</div>
+        <div>Done: {done}</div>
       </div>
+
+      <h2>Add Task</h2>
+      <form onSubmit={addTask}>
+        <input
+          placeholder="Task title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <button type="submit">Add</button>
+      </form>
+
+      <h2>Tasks</h2>
+      {tasks.map((task) => (
+        <div key={task.id} style={{ marginBottom: 10 }}>
+          {task.title} - {task.status}
+          <button onClick={() => updateStatus(task.id, "in-progress")}>
+            In Progress
+          </button>
+          <button onClick={() => updateStatus(task.id, "done")}>Done</button>
+          <button onClick={() => deleteTask(task.id)}>Delete</button>
+        </div>
+      ))}
     </div>
   );
 }
